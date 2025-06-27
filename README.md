@@ -4,12 +4,6 @@ BookNest is a full-stack **MERN** (MongoDB, Express.js, React.js, Node.js) web a
 
 ---
 
-## 🔗 Demo
-
-👉 [Live Demo Link (if deployed)](https://your-deployment-link.com)  
-📽️ [Loom Video Demo](https://loom.com/share/your-video-id) *(if you recorded one)*
-
----
 
 ## 🛠️ Features
 
