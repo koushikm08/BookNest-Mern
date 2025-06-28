@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./AuthForm.css"; // Same CSS file used by user/admin login
+import "./AuthForm.css"; // Keep your existing styling
 
 const Slogin = () => {
   const [email, setEmail] = useState("");
@@ -24,7 +24,7 @@ const Slogin = () => {
         localStorage.setItem("role", res.role);
         navigate("/shome");
       } else {
-        alert("Login failed");
+        alert(res.message || "Login failed");
       }
     } catch (error) {
       console.error("Seller login error:", error);

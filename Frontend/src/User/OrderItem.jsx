@@ -26,38 +26,46 @@ const OrderItem = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const orderData = {
-  flatno,
-  city,
-  state,
-  pincode,
-  totalamount,
-  BookingDate,
-  Delivery,
-  description,
-  userId,               // ✅ User who is placing the order
-  userName,             // ✅ User's name
+  if (!item || !user) {
+    alert("Missing item or user information");
+    return;
+  }
 
-  // ✅ ADD these two to fix seller view
-  sellerId: book.userId,     // This is the seller's ID — must be set correctly
-  seller: book.userName,     // Seller's name
-  booktitle: book.title,
-  bookauthor: book.author,
-  bookgenre: book.genre,
-  itemImage: book.itemImage,
-};
+  const { flatno, city, state, pincode } = formData;
 
-    try {
-      await axios.post('http://localhost:4000/userorder', orderData);
-      alert('Order placed successfully!');
-      navigate('/myorders');
-    } catch (error) {
-      console.error('Error placing order:', error);
-      alert('Failed to place order');
-    }
+  const orderData = {
+    flatno,
+    city,
+    state,
+    pincode,
+    totalamount: item.price, // Use item price
+    BookingDate: new Date().toISOString().split("T")[0],
+    Delivery: "Pending",
+    description: item.description || "No description",
+    userId: user.id,
+    userName: user.name,
+
+    // ✅ Seller info from the book item
+    sellerId: item.userId,
+    seller: item.userName,
+
+    booktitle: item.title,
+    bookauthor: item.author,
+    bookgenre: item.genre,
+    itemImage: item.itemImage,
   };
+
+  try {
+    await axios.post("http://localhost:4000/userorder", orderData);
+    alert("Order placed successfully!");
+    navigate("/myorders");
+  } catch (error) {
+    console.error("Error placing order:", error);
+    alert("Failed to place order");
+  }
+};
 
   return (
     <div className="bg-gray-100 min-h-screen pb-10">

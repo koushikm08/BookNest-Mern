@@ -10,3 +10,4 @@
 # Build
 dist/
 build/
+node_modules/

@@ -133,26 +133,45 @@ app.delete('/sellerdelete/:id',(req,res)=>{
 });
 
 
-                                                    // Seller //
-//  login api
-app.post('/slogin', (req, resp) => {
+app.post('/slogin', async (req, res) => {
   const { email, password } = req.body;
-  seller.findOne({ email: email })
-    .then(user => {
-      if (user) {
-        if (user.password === password) {
-          return resp.json({
-            Status: "Success",
-            user: { id: user.id, name: user.name, email: user.email }
-          });
-        } else {
-          resp.json("login fail");
-        }
-      } else {
-        resp.json("no user");
-      }
+  console.log("Seller login attempt:", email);
+
+  try {
+    const user = await seller.findOne({ email });
+
+    if (!user) {
+      console.log("Seller not found");
+      return res.status(400).json({ success: false, message: "Seller not found" });
+    }
+
+    if (user.password !== password) {
+      console.log("Incorrect password for seller:", email);
+      return res.status(400).json({ success: false, message: "Invalid password" });
+    }
+
+    const token = "dummy_token";
+    console.log("Seller login successful:", user.name);
+
+    return res.status(200).json({
+      success: true,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: "seller"
+      },
+      token,
+      role: "seller"
     });
+
+  } catch (err) {
+    console.error("Seller login error:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
 });
+
+
 
 
 // Register Api

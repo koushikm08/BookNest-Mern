@@ -33,39 +33,37 @@ function App() {
        
        <BrowserRouter>
        <Routes>
-       <Route path='/' element={<Home/>} />
+  {/* Home and Auth Pages First */}
+  <Route path='/' element={<Home />} />
+  <Route path='/login' element={<Login />} />
+  <Route path='/signup' element={<Signup />} />
+  <Route path='/slogin' element={<Slogin />} />
+  <Route path='/ssignup' element={<Ssignup />} />
+  <Route path='/alogin' element={<Alogin />} />
+  <Route path='/asignup' element={<Asignup />} />
 
+  {/* User Dashboard */}
+  <Route path='/uhome' element={<Uhome />} />
+  <Route path='/uproducts' element={<Products />} />
+  <Route path='/uitem/:id' element={<Uitem />} />
+  <Route path='/orderitem/:id' element={<OrderItem />} />
+  <Route path='/myorders' element={<Myorders />} />
+  <Route path='/wishlist' element={<Wishlist />} />
 
-      {/* Admin */}
-      <Route path='/alogin' element={<Alogin/>} />
-      <Route path='/asignup' element={<Asignup/>} />
-      <Route path='/ahome' element={<Ahome/>} />
-      <Route path='/users' element={<Users/>} />
-      <Route path='/sellers' element={<Seller/>} />
-      <Route path = "/items" element = {<Items/>}/>
+  {/* Seller Dashboard */}
+  <Route path='/shome' element={<Shome />} />
+  <Route path='/myproducts' element={<Myproducts />} />
+  <Route path='/addbook' element={<Addbook />} />
+  <Route path='/book/:id' element={<Book />} />
+  <Route path='/orders' element={<Orders />} />
 
+  {/* Admin Dashboard */}
+  <Route path='/ahome' element={<Ahome />} />
+  <Route path='/users' element={<Users />} />
+  <Route path='/sellers' element={<Seller />} />
+  <Route path='/items' element={<Items />} />
+</Routes>
 
-           {/* seller */}
-        <Route path='/slogin' element={<Slogin/>} />
-      <Route path='/ssignup' element={<Ssignup/>} />
-       <Route path='/shome' element={<Shome/>} />
-       <Route path='/myproducts' element={<Myproducts/>} />
-       <Route path='/addbook' element={<Addbook/>} />
-       <Route path='/book/:id' element={<Book/>} />
-       <Route path='/orders' element={<Orders/>} />
-
-      {/* user */}
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/signup' element={<Signup/>} />
-        <Route path='/nav' element={<Unavbar/>}/>
-         <Route path='/uhome' element={<Uhome/>} />
-         <Route path='/uproducts' element={<Products/>} />
-       <Route path='/uitem/:id' element={<Uitem/>} />
-       <Route path="/orderitem/:id" element={<OrderItem/>} />
-       <Route path="/myorders" element={<Myorders />} />
-       <Route path="/wishlist" element={<Wishlist />} />
-
-       </Routes>
        </BrowserRouter>
 
 

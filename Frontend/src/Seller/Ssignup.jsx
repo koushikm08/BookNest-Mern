@@ -1,120 +1,78 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./AuthForm.css";
 
 const Ssignup = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    let payload = { name, email, password };
-
-    axios
-      .post("http://localhost:4000/ssignup", payload)
-      .then((result) =>{
-        alert('Account created')
-        console.log(result)
-        navigate('/slogin')
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("Failed to create an account");
+    try {
+      const response = await axios.post("http://localhost:4000/ssignup", {
+        name,
+        email,
+        password,
       });
-  };
 
-  let formHandle1 = (e) => {
-    e.preventDefault();
-    navigate("/slogin");
+      if (response.data === "Already have an account") {
+        alert("Account already exists. Please login.");
+        navigate("/slogin");
+      } else {
+        alert("Account created successfully!");
+        navigate("/slogin");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("An error occurred during signup.");
+    }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="max-w-md w-full bg-white p-8 rounded-md shadow-md overflow-hidden relative">
-   
-
-      
-
-      {/* <div className=" h-5  w-full  bg-indigo-500 transform skew-y-6 origin  "></div> */}
-        <div className="text-center mb-4">
-        
-          
-         
-          <h2 className="text-3xl font-extrabold text-gray-900">Seller Registration</h2>
-          
-        </div>
-
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Name
-            </label>
-            <input
-              name="name"
-              type="name"
-              autoComplete="email"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Name"
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email address
-            </label>
-            <input
-              name="email"
-              type="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Email address"
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Password"
-            />
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:border-indigo-300 transition-all duration-300"
-            >
-              Signup
-            </button>
-          </div>
-
-          <p className="text-sm text-gray-600">
-            Already have an account{' '}
-            <button
-              onClick={formHandle1}
-              className="text-indigo-500 hover:underline focus:outline-none focus:ring focus:border-indigo-300 transition-all duration-300"
-            >
-              Login
-            </button>
-          </p>
+    <div className="login-container">
+      <div className="login-card">
+        <h2>Seller Signup</h2>
+        <form onSubmit={handleSignup}>
+          <label>Name</label>
+          <input
+            type="text"
+            placeholder="Enter name"
+            value={name}
+            className="login-input"
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <label>Email address</label>
+          <input
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            className="login-input"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <label>Password</label>
+          <input
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            className="login-input"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit" className="login-button">Sign Up</button>
         </form>
-
-        <div className="absolute h-full w-full bg-indigo-500 transform -skew-y-6 origin-bottom-right"></div>
-       
+        <p className="signup-link">Already have a seller account?</p>
+        <button className="alt-button" onClick={() => navigate("/slogin")}>Seller Login</button>
+        <hr />
+        <p>Login as Admin or User:</p>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <button className="alt-button" onClick={() => navigate("/alogin")}>Admin Login</button>
+          <button className="alt-button" onClick={() => navigate("/login")}>User Login</button>
+        </div>
       </div>
     </div>
   );
